@@ -8,8 +8,13 @@ import { getEnergyPercent, getProgressPercent, getResultBucket } from "./lib/sco
 type Stage = "cover" | "intro" | "quiz" | "result";
 
 const productTitle = "活人感电量测试";
-const productSubtitle = "12 道小题，看看你现在更接近哪种在线状态。";
-const deliveryLabel = "原创在线测试页体验 + 结果文案 + 截图分享体验";
+const productSubtitle = "12 题速测，你最近还剩几格活人电？";
+const coverTags = ["12 题很快测完", "本地秒出结果", "截图发群聊很方便"];
+const introBullets = [
+  "共 12 题，选最像你的那一个。",
+  "别回头改答案，越改越不像你。",
+  "做完直接出结果，顺手就能截图发人。"
+] as const;
 
 function App() {
   const [stage, setStage] = useState<Stage>("cover");
@@ -81,7 +86,7 @@ function App() {
     <div className="app-shell">
       <main className="app-frame">
         <header className="topbar">
-          <div>
+          <div className="topbar__brand">
             <p className="eyebrow">原创在线测试页体验</p>
             <h1>{productTitle}</h1>
           </div>
@@ -91,19 +96,26 @@ function App() {
         {stage === "cover" ? (
           <section className="panel hero-panel">
             <div className="hero-panel__content">
-              <p className="hero-panel__badge">轻口语 · 好截图 · 手机端优先</p>
+              <p className="hero-panel__badge">⚡ 最近状态速测</p>
               <h2>{productSubtitle}</h2>
-              <p className="hero-panel__text">
-                这是一页就能跑通的原创小测试，适合快速开测、快速出结果、快速截图发给朋友。
-              </p>
-              <div className="chip-row">
-                <span className="chip">12 题快速完成</span>
-                <span className="chip">本地出结果</span>
-                <span className="chip">文案可复制</span>
+              <p className="hero-panel__text">1 分钟出结果，适合截图发朋友。</p>
+              <div className="hero-panel__aside">
+                <span className="hero-panel__sticker">群聊可发</span>
+                <p>不是量表，是那种测完会顺手甩给朋友的轻测试。</p>
               </div>
-              <button type="button" className="primary-button" onClick={() => setStage("intro")}>
-                开始前看说明
-              </button>
+              <div className="chip-row">
+                {coverTags.map((tag) => (
+                  <span key={tag} className="chip">
+                    {tag}
+                  </span>
+                ))}
+              </div>
+              <div className="hero-panel__cta">
+                <button type="button" className="primary-button" onClick={() => setStage("intro")}>
+                  开始测测看
+                </button>
+                <p className="hero-panel__hint">先测再嘴硬，也来得及。</p>
+              </div>
             </div>
             <ComplianceNotice />
           </section>
@@ -111,14 +123,13 @@ function App() {
 
         {stage === "intro" ? (
           <section className="panel intro-panel">
-            <p className="eyebrow">测试说明</p>
-            <h2>先用直觉作答，别来回改答案。</h2>
+            <p className="eyebrow">玩法说明</p>
+            <h2>别演，按第一反应点。</h2>
             <ul className="check-list">
-              <li>共 12 题，选你当下最像的一项。</li>
-              <li>全程本地完成，提交后直接出结果。</li>
-              <li>交付内容就是这个原创单页网页里的测试体验、结果文案和截图分享体验。</li>
+              {introBullets.map((bullet) => (
+                <li key={bullet}>{bullet}</li>
+              ))}
             </ul>
-            <ComplianceNotice />
             <div className="button-row">
               <button type="button" className="primary-button" onClick={startQuiz}>
                 进入测试
@@ -145,12 +156,10 @@ function App() {
               current={currentIndex + 1}
               total={questions.length}
               question={currentQuestion}
-              selectedScore={answers[currentIndex]}
               onSelect={handleAnswer}
               onBack={handleBack}
               canGoBack={currentIndex > 0}
             />
-            <ComplianceNotice compact />
           </>
         ) : null}
 
@@ -164,11 +173,6 @@ function App() {
           />
         ) : null}
       </main>
-
-      <footer className="footer">
-        <p>{deliveryLabel}</p>
-        <ComplianceNotice compact />
-      </footer>
     </div>
   );
 }

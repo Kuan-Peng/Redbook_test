@@ -4,7 +4,6 @@ type QuestionCardProps = {
   current: number;
   total: number;
   question: Question;
-  selectedScore?: number;
   onSelect: (score: number) => void;
   onBack: () => void;
   canGoBack: boolean;
@@ -14,7 +13,6 @@ export function QuestionCard({
   current,
   total,
   question,
-  selectedScore,
   onSelect,
   onBack,
   canGoBack
@@ -36,18 +34,18 @@ export function QuestionCard({
       </div>
       <p className="question-card__hint">{question.hint}</p>
       <div className="option-list">
-        {question.options.map((option) => {
-          const selected = selectedScore === option.score;
-
+        {question.options.map((option, index) => {
           return (
             <button
               key={option.label}
               type="button"
-              className={`option-button ${selected ? "option-button--selected" : ""}`}
+              className="option-button"
               onClick={() => onSelect(option.score)}
             >
-              <span className="option-button__marker">{selected ? "✓" : "○"}</span>
-              <span>{option.label}</span>
+              <span className="option-button__marker">
+                {String.fromCharCode(65 + index)}
+              </span>
+              <span className="option-button__text">{option.label}</span>
             </button>
           );
         })}

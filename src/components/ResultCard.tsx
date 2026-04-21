@@ -44,20 +44,20 @@ export function ResultCard({
       <p className="result-card__description">{result.description}</p>
 
       <div className="result-card__share">
-        <p className="eyebrow">截图文案</p>
+        <p className="eyebrow">截图发朋友</p>
         <p>{result.shareText}</p>
       </div>
 
-      <ComplianceNotice />
-
-      <div className="button-row">
+      <div className="button-row button-row--result">
         <button type="button" className="primary-button" onClick={onCopy}>
-          {copied ? "已复制结果文案" : "复制结果文案"}
+          {copied ? "已复制，快去发" : "复制这段发朋友"}
         </button>
         <button type="button" className="ghost-button" onClick={onRestart}>
-          再测一次
+          重开这把
         </button>
       </div>
+
+      <ComplianceNotice compact />
     </section>
   );
 }
