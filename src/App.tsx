@@ -16,6 +16,7 @@ const introBullets = [
   "别回头改，越改越像在挽尊。",
   "做完直接见结果，顺手就能发人。"
 ] as const;
+const mascotSrc = "/mascot-heart-cloud.svg";
 
 function App() {
   const [stage, setStage] = useState<Stage>("cover");
@@ -86,13 +87,15 @@ function App() {
   return (
     <div className={`app-shell app-shell--${stage}`}>
       <main className="app-frame">
-        <header className="topbar">
-          <div className="topbar__brand">
-            <p className="eyebrow">原创在线测试页体验</p>
-            <h1>{productTitle}</h1>
-          </div>
-          <span className="topbar__pill">结果可截图</span>
-        </header>
+        {stage !== "result" ? (
+          <header className="topbar">
+            <div className="topbar__brand">
+              <p className="eyebrow">原创在线测试页体验</p>
+              <h1>{productTitle}</h1>
+            </div>
+            <span className="topbar__pill">结果可截图</span>
+          </header>
+        ) : null}
 
         {stage === "cover" ? (
           <section className="panel hero-panel">
@@ -107,6 +110,28 @@ function App() {
                     {sticker}
                   </span>
                 ))}
+              </div>
+              <div className="hero-panel__preview">
+                <div className="phone-preview">
+                  <div className="phone-preview__meta">
+                    <span>活人感测试</span>
+                    <span>3/12</span>
+                  </div>
+                  <div className="phone-preview__dots" aria-hidden="true">
+                    <span className="is-on" />
+                    <span className="is-on" />
+                    <span className="is-on" />
+                    <span />
+                    <span />
+                  </div>
+                  <p className="phone-preview__question">最近一周，你还会被小事可爱到吗？</p>
+                  <img className="phone-preview__art" src={mascotSrc} alt="" />
+                  <div className="phone-preview__answer phone-preview__answer--active">
+                    有，偶尔会被自己可爱到
+                  </div>
+                  <div className="phone-preview__answer">还行，但电量看天意</div>
+                </div>
+                <div className="hero-panel__speech">测完就能发圈 / 发朋友</div>
               </div>
               <div className="chip-row">
                 {coverTags.map((tag) => (
@@ -135,6 +160,10 @@ function App() {
                 <li key={bullet}>{bullet}</li>
               ))}
             </ul>
+            <div className="intro-panel__art-card">
+              <img className="intro-panel__art" src={mascotSrc} alt="" />
+              <div className="intro-panel__speech">答完直接带图发人</div>
+            </div>
             <div className="button-row">
               <button type="button" className="primary-button" onClick={startQuiz}>
                 进入测试
