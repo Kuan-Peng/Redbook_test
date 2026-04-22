@@ -45,14 +45,16 @@ button {
 }
 
 .app-shell {
-  min-height: 100vh;
-  padding: 18px 14px 40px;
+  min-height: 100svh;
+  padding: 18px 14px 24px;
 }
 
 .app-frame {
   width: min(100%, 520px);
   margin: 0 auto;
-  display: grid;
+  min-height: calc(100svh - 42px);
+  display: flex;
+  flex-direction: column;
   gap: 16px;
 }
 
@@ -68,15 +70,18 @@ button {
 .topbar {
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  align-items: flex-start;
   gap: 12px;
-  padding: 20px 20px 18px;
+  min-height: 170px;
+  padding: 28px 20px 24px;
   border-radius: var(--radius-lg);
   background: var(--surface);
 }
 
 .topbar__brand {
   min-width: 0;
+  display: grid;
+  gap: 10px;
 }
 
 .topbar h1,
@@ -137,26 +142,28 @@ button {
   background: radial-gradient(circle, rgba(255, 182, 92, 0.4), transparent 70%);
 }
 
-.hero-panel::before {
-  content: "⚡";
-  position: absolute;
-  top: 18px;
-  right: 18px;
-  width: 38px;
-  height: 38px;
-  display: grid;
-  place-items: center;
-  border-radius: 999px;
-  background: rgba(255, 255, 255, 0.72);
-  color: #b76a00;
-  box-shadow: 0 10px 18px rgba(255, 182, 92, 0.2);
-}
-
 .hero-panel__content,
 .intro-panel,
 .result-card {
   position: relative;
   z-index: 1;
+}
+
+.hero-panel,
+.intro-panel,
+.question-card {
+  display: flex;
+  flex-direction: column;
+}
+
+.app-shell--cover .hero-panel,
+.app-shell--intro .intro-panel,
+.app-shell--quiz .question-card {
+  flex: 1 1 auto;
+}
+
+.app-shell--quiz .question-card {
+  min-height: 0;
 }
 
 .hero-panel__badge {
@@ -179,7 +186,7 @@ button {
 
 .hero-panel__content h2 {
   max-width: 10.5ch;
-  margin-bottom: 12px;
+  margin-bottom: 10px;
 }
 
 .hero-panel__text,
@@ -193,39 +200,49 @@ button {
 }
 
 .hero-panel__text {
-  margin: 0 0 14px;
-  font-size: 1rem;
+  margin: 0 0 18px;
+  font-size: 1.02rem;
 }
 
-.hero-panel__aside {
+.hero-panel__spark {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 54px;
+  height: 54px;
   display: grid;
-  gap: 8px;
-  margin-bottom: 20px;
-  padding: 14px 16px;
-  border-radius: 20px;
-  background: rgba(255, 255, 255, 0.78);
-  border: 1px solid rgba(25, 51, 45, 0.06);
+  place-items: center;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.76);
+  color: #d77416;
+  font-size: 1.6rem;
+  box-shadow: 0 12px 24px rgba(255, 182, 92, 0.18);
 }
 
-.hero-panel__aside p {
-  margin: 0;
-  color: var(--ink-soft);
+.hero-sticker-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 22px;
 }
 
 .hero-panel__sticker {
   display: inline-flex;
   width: fit-content;
-  padding: 6px 10px;
+  padding: 9px 12px;
   border-radius: 999px;
-  background: rgba(23, 155, 126, 0.12);
+  background: rgba(255, 255, 255, 0.84);
   color: var(--primary-deep);
-  font-size: 0.84rem;
+  border: 1px solid rgba(23, 155, 126, 0.08);
+  box-shadow: 0 8px 18px rgba(25, 51, 45, 0.05);
+  font-size: 0.88rem;
 }
 
 .hero-panel__cta {
   display: grid;
   gap: 12px;
-  margin-top: 24px;
+  margin-top: auto;
+  padding-top: 26px;
 }
 
 .hero-panel__hint {
@@ -266,13 +283,14 @@ button {
 }
 
 .check-list li + li {
-  margin-top: 12px;
+  margin-top: 22px;
 }
 
 .check-list li {
   position: relative;
   padding-left: 26px;
-  font-size: 1.02rem;
+  font-size: 1.08rem;
+  line-height: 1.55;
 }
 
 .check-list li::before {
@@ -318,12 +336,13 @@ button {
   display: flex;
   justify-content: space-between;
   gap: 12px;
-  align-items: center;
+  align-items: flex-start;
 }
 
 .option-list {
   display: grid;
-  gap: 16px;
+  gap: 18px;
+  margin-top: 8px;
 }
 
 .option-button,
@@ -344,7 +363,8 @@ button {
   gap: 14px;
   align-items: flex-start;
   width: 100%;
-  padding: 18px 16px;
+  min-height: 104px;
+  padding: 22px 18px;
   border: 1px solid rgba(25, 51, 45, 0.08);
   background: rgba(255, 255, 255, 0.88);
   color: var(--ink);
@@ -360,19 +380,20 @@ button {
 
 .option-button__marker {
   flex-shrink: 0;
-  width: 32px;
-  height: 32px;
+  width: 42px;
+  height: 42px;
   display: grid;
   place-items: center;
   border-radius: 999px;
-  font-size: 0.96rem;
+  font-size: 1.1rem;
   color: var(--primary-deep);
   background: rgba(23, 155, 126, 0.1);
   border: 1px solid rgba(23, 155, 126, 0.12);
 }
 
 .option-button__text {
-  line-height: 1.45;
+  line-height: 1.5;
+  font-size: 1.04rem;
 }
 
 .primary-button,
@@ -445,40 +466,29 @@ button {
   margin-top: 18px;
 }
 
-@media (min-width: 768px) {
-  .app-shell {
-    padding: 30px 18px 40px;
-  }
-
-  .panel,
-  .topbar {
-    padding-left: 24px;
-    padding-right: 24px;
-  }
-}
-
 .compliance__item + .compliance__item::before {
   content: " / ";
   color: rgba(77, 97, 91, 0.5);
 }
 
 .question-card {
-  padding-top: 26px;
-  padding-bottom: 26px;
+  padding-top: 32px;
+  padding-bottom: 34px;
 }
 
 .question-card__hint {
-  margin: 10px 0 22px;
-  font-size: 1rem;
+  margin: 14px 0 24px;
+  font-size: 1.06rem;
 }
 
 .intro-panel {
-  padding-top: 30px;
-  padding-bottom: 30px;
+  padding-top: 44px;
+  padding-bottom: 36px;
 }
 
 .intro-panel .button-row {
-  margin-top: 26px;
+  margin-top: auto;
+  padding-top: 40px;
 }
 
 .button-row--result {
@@ -491,5 +501,31 @@ button {
 @media (min-width: 560px) {
   .button-row--result {
     grid-template-columns: 1.15fr 0.85fr;
+  }
+}
+
+@media (max-width: 559px) {
+  .button-row {
+    flex-direction: column;
+  }
+
+  .topbar {
+    min-height: 158px;
+  }
+}
+
+@media (min-width: 768px) {
+  .app-shell {
+    padding: 30px 18px 28px;
+  }
+
+  .panel,
+  .topbar {
+    padding-left: 24px;
+    padding-right: 24px;
+  }
+
+  .app-frame {
+    min-height: calc(100svh - 58px);
   }
 }

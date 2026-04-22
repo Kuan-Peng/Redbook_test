@@ -8,12 +8,13 @@ import { getEnergyPercent, getProgressPercent, getResultBucket } from "./lib/sco
 type Stage = "cover" | "intro" | "quiz" | "result";
 
 const productTitle = "活人感电量测试";
-const productSubtitle = "12 题速测，你最近还剩几格活人电？";
-const coverTags = ["12 题很快测完", "本地秒出结果", "截图发群聊很方便"];
+const productSubtitle = "你今天是满电乱窜，还是勉强营业？";
+const coverStickers = ["⚡ 满电乱窜", "🫠 勉强营业", "📵 低电静音"] as const;
+const coverTags = ["1 分钟露馅", "群聊一甩就懂", "适合截图发人"];
 const introBullets = [
   "共 12 题，选最像你的那一个。",
-  "别回头改答案，越改越不像你。",
-  "做完直接出结果，顺手就能截图发人。"
+  "别回头改，越改越像在挽尊。",
+  "做完直接见结果，顺手就能发人。"
 ] as const;
 
 function App() {
@@ -83,7 +84,7 @@ function App() {
   };
 
   return (
-    <div className="app-shell">
+    <div className={`app-shell app-shell--${stage}`}>
       <main className="app-frame">
         <header className="topbar">
           <div className="topbar__brand">
@@ -96,12 +97,16 @@ function App() {
         {stage === "cover" ? (
           <section className="panel hero-panel">
             <div className="hero-panel__content">
-              <p className="hero-panel__badge">⚡ 最近状态速测</p>
+              <div className="hero-panel__spark">⚡</div>
+              <p className="hero-panel__badge">⚡ 今日活人值速测</p>
               <h2>{productSubtitle}</h2>
-              <p className="hero-panel__text">1 分钟出结果，适合截图发朋友。</p>
-              <div className="hero-panel__aside">
-                <span className="hero-panel__sticker">群聊可发</span>
-                <p>不是量表，是那种测完会顺手甩给朋友的轻测试。</p>
+              <p className="hero-panel__text">12 题就够，看你最近到底是⚡、🫠还是📵。</p>
+              <div className="hero-sticker-row">
+                {coverStickers.map((sticker) => (
+                  <span key={sticker} className="hero-panel__sticker">
+                    {sticker}
+                  </span>
+                ))}
               </div>
               <div className="chip-row">
                 {coverTags.map((tag) => (
@@ -114,7 +119,7 @@ function App() {
                 <button type="button" className="primary-button" onClick={() => setStage("intro")}>
                   开始测测看
                 </button>
-                <p className="hero-panel__hint">先测再嘴硬，也来得及。</p>
+                <p className="hero-panel__hint">先测再嘴硬，也还来得及。</p>
               </div>
             </div>
             <ComplianceNotice />
